@@ -61,7 +61,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it "redirects to show view" do
         post :create, question: attributes_for(:question)
-        expect(response).to redirect_to question_path(assigns(:question))
+        expect(response).to redirect_to assigns(:question)
       end
     end
 
@@ -80,21 +80,20 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe "PATCH #update" do
     context "with valid arguments" do
+      before{ patch :update, id: question, question: {title: "new title", body: "new body"} }
+
       it "assigns the requested question to @question" do
-        patch :update, id: question, question: {title: "new title", body: "new body"}
         expect(assigns(:question)).to eq question
       end
 
       it "changes question attributes" do
-        patch :update, id: question, question: {title: "new title", body: "new body"}
         question.reload
         expect(question.title).to eq "new title"
         expect(question.body).to eq "new body"
       end
 
       it "redirects to show view" do
-        patch :update, id: question, question: {title: "new title", body: "new body"}
-        expect(response).to redirect_to question_path(assigns(:question))
+        expect(response).to redirect_to assigns(:question)
       end
     end
 

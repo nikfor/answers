@@ -21,7 +21,7 @@ class AnswersController < ApplicationController
   end
 
   def find_question
-    @question = Question.find_by(id: params[:question_id])
+    @question = Question.find(params[:question_id])
   end
 
 end
