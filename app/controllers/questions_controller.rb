@@ -41,6 +41,5 @@ class QuestionsController < ApplicationController
 
   def find_question
     @question = Question.find(params[:id])
-    render_404 unless @question
   end
 end
