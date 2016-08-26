@@ -1,0 +1,6 @@
+p = @question.body
+br
+
+= simple_form_for [@question, @answer] do |f|
+  = f.input :body, label: "Ваш ответ:", as: :text, class: "text_field"
+  = f.button :submit, "Создать", class: "left_btn"
