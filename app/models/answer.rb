@@ -4,5 +4,4 @@ class Answer < ActiveRecord::Base
 
   validates :body, presence: true
   validates_associated :question
-  validates_associated :user
 end

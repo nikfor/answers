@@ -10,7 +10,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     if @answer.save
-      redirect_to question_answers_path(@question), alert: "Ваш ответ успешно создан."
+      redirect_to question_path(@question), notice: "Ваш ответ успешно создан."
     else
       render :new
     end
@@ -21,18 +21,19 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if own_answer?
+    if current_user.owner_of?(@answer)
       @answer.destroy
-      redirect_to questions_path, alert: "Ответ успешно удален"
+      flash.notice = "Ответ успешно удален"
     else
-      redirect_to questions_path, alert: "Вы не можете удалять чужие ответы"
+      flash.alert = "Вы не можете удалять чужие ответы"
     end
+    redirect_to @answer.question
   end
 
   private
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body).merge(user: current_user)
   end
 
   def find_question
@@ -43,7 +44,4 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
   end
 
-  def own_answer?
-    find_answer.user_id == current_user.id
-  end
 end

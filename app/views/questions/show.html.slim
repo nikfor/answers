@@ -1,0 +1,15 @@
+.question-answer-block
+  .question-block.panel.panel-info
+    .panel-heading = @question.title
+    .panel-body = @question.body
+
+  .answers-block
+    - @answers.each do |a|
+      - if a.id
+        .answer.panel.panel-default.clearfix
+          .panel-body = a.body
+          = link_to "Удалить ответ", answer_path(a), class: "btn btn-default", method: :delete if current_user && current_user.owner_of?(a)
+    - if current_user
+      = simple_form_for [@question, @answer] do |f|
+        = f.input :body, label: "Ваш ответ:", as: :text, class: "text_field"
+        = f.button :submit, "Создать", class: "left_btn"

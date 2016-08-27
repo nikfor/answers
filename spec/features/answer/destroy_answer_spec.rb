@@ -8,39 +8,32 @@ feature "Destroy answer", %q{
   given(:user) { create(:user) }
   given!(:other_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
-  given!(:answer) { create(:answer, user: user, question: question) }
-  given!(:other_user_answer) { create(:answer, body: "Абрвалг",
-                                               user: other_user,
-                                               question: question) }
+  given!(:answer) { create(:answer, question: question, user: user) }
 
   scenario "Logged user destroy own answer" do
     sign_in(user.email, user.password)
 
     visit questions_path
-    click_on "Посмотреть"
-    click_on("Удалить", match: :first)
+    click_link question.title
+    click_link "Удалить"
 
+    expect(page).to_not have_content answer.body
     expect(page).to have_content "Ответ успешно удален"
-    expect(current_path).to eq questions_path
+    expect(current_path).to eq question_path(question)
   end
 
   scenario "Logged user destroy other user answer" do
-    sign_in(user.email, user.password)
+    sign_in(other_user.email, other_user.password)
 
     visit questions_path
-    click_on "Посмотреть"
-    all('a', text: 'Удалить')[1].click
+    click_link question.title
 
-
-    expect(page).to have_content "Вы не можете удалять чужие ответы"
-    expect(current_path).to eq questions_path
+    expect(page).to_not have_link "Удалить"
   end
 
-  scenario "Non logged user create answer" do
+  scenario "Non logged user destroy answer" do
     visit questions_path
-    click_on "Посмотреть"
-    click_on("Удалить", match: :first)
-
-    expect(page).to have_content "Вам необходимо войти в систему или зарегистрироваться."
+    click_link question.title
+    expect(page).to_not have_link "Удалить"
   end
 end

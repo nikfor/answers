@@ -1,19 +1,15 @@
-h1 Вопросы
-- unless @questions.empty?
-  table
-    tr
-      th Номер
-      th Название
-      th Ответы
-      th Удалить
-    - @questions.each do |q|
+.question-list
+  h1 Вопросы
+  - unless @questions.empty?
+    table.table.table-stripped
       tr
-        td = q.id
-        td = q.title
-        - if q.answers.empty?
-          td = link_to "Ответить", new_question_answer_path(q)
-        - else
-          td = link_to "Посмотреть", question_answers_path(q)
-        td = link_to "Удалить", question_path(q), method: :delete
+        th Номер
+        th Название
+        th Удалить
+      - @questions.each do |q|
+        tr
+          td.number = q.id
+          td.title = link_to q.title, question_path(q)
+          td.delete = link_to "Удалить", question_path(q), method: :delete if current_user && current_user.owner_of?(q)
 
 
