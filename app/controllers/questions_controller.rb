@@ -18,8 +18,9 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
+    @question.user_id = current_user.id
     if @question.save
-      redirect_to questions_path, notice: "Ваш вопрос успешно создан."
+      redirect_to @question, notice: "Ваш вопрос успешно создан."
     else
       render :new
     end
@@ -39,7 +40,7 @@ class QuestionsController < ApplicationController
   def destroy
     if current_user.owner_of?(@question)
       @question.destroy
-       flash.notice = "Вопрос успешно удален"
+      flash.notice = "Вопрос успешно удален"
     else
       flash.alert = "Вы не можете удалять чужие вопросы"
     end
@@ -49,7 +50,7 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :body).merge(user: current_user)
+    params.require(:question).permit(:title, :body)
   end
 
   def find_question

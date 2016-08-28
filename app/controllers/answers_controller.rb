@@ -1,23 +1,16 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
   before_action :find_question, except: [:destroy]
   before_action :find_answer, only: [:destroy]
 
-  def new
-    @answer = @question.answers.new
-  end
-
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.user_id = current_user.id
     if @answer.save
-      redirect_to question_path(@question), notice: "Ваш ответ успешно создан."
+      redirect_to @question, notice: "Ваш ответ успешно создан."
     else
-      render :new
+      @answers = @question.answers.reload
+      render "questions/show"
     end
-  end
-
-  def index
-    @answers = @question.answers
   end
 
   def destroy
@@ -33,7 +26,7 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:body).merge(user: current_user)
+    params.require(:answer).permit(:body)
   end
 
   def find_question

@@ -5,7 +5,7 @@
 
   .answers-block
     - @answers.each do |a|
-      - if a.id
+      - if a.persisted?
         .answer.panel.panel-default.clearfix
           .panel-body = a.body
           = link_to "Удалить ответ", answer_path(a), class: "btn btn-default", method: :delete if current_user && current_user.owner_of?(a)

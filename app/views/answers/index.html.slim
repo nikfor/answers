@@ -1,7 +1,0 @@
-p = @question.body
-br
-
-ul
-  - @answers.each do |a|
-    li = a.body
-    div = link_to "Удалить", answer_path(a), method: :delete

@@ -1,4 +1,4 @@
-require 'rails_helper'
+  require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question, title: "Сколько будет 2+2 ?") }
@@ -64,7 +64,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it "redirects to show view" do
         post :create, question: attributes_for(:question)
-        expect(response).to redirect_to questions_path
+        expect(response).to redirect_to assigns(:question)
       end
     end
 
