@@ -1,0 +1,15 @@
+.question-list
+  h1 Вопросы
+  - unless @questions.empty?
+    table.table.table-stripped
+      tr
+        th Номер
+        th Название
+        th Удалить
+      - @questions.each do |q|
+        tr
+          td.number = q.id
+          td.title = link_to q.title, question_path(q)
+          td.delete = link_to "Удалить", question_path(q), method: :delete if current_user && current_user.owner_of?(q)
+
+

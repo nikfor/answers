@@ -1,0 +1,11 @@
+ru:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              invalid: "Неверный email"
+              taken: "Пользователь с данным email уже зарегистрирован"
+            password_confirmation:
+              confirmation: "Пароль и подтверждение не совпадают"

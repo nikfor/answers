@@ -1,17 +1,26 @@
 class AnswersController < ApplicationController
-  before_action :find_question
+  before_action :find_question, except: [:destroy]
+  before_action :find_answer, only: [:destroy]
 
-  def new
-    @answer = @question.answers.new
+  def create
+    @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
+    if @answer.save
+      redirect_to @question, notice: "Ваш ответ успешно создан."
+    else
+      @answers = @question.answers.reload
+      render "questions/show"
+    end
   end
 
-  def create 
-    @answer = @question.answers.new(answer_params)
-    if @answer.save
-      redirect_to @question
+  def destroy
+    if current_user.owner_of?(@answer)
+      @answer.destroy
+      flash.notice = "Ответ успешно удален"
     else
-      render :new
+      flash.alert = "Вы не можете удалять чужие ответы"
     end
+    redirect_to @answer.question
   end
 
   private
@@ -22,6 +31,10 @@ class AnswersController < ApplicationController
 
   def find_question
     @question = Question.find(params[:question_id])
+  end
+
+  def find_answer
+    @answer = Answer.find(params[:id])
   end
 
 end

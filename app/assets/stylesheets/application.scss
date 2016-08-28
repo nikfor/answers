@@ -10,6 +10,38 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body{
+  padding: 10px;
+  padding-left: 20px;
+}
+.question-answer-block{
+  width: 800px;
+}
+
+.answer .btn{
+  float: right;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+abbr{
+  display: none;
+}
+
+.question-list{
+  width: 800px;
+}
+
+th{
+  text-align: center;
+}
+
+td.number {
+  width: 70px;
+  text-align: center;
+}

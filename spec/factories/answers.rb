@@ -1,7 +1,12 @@
 FactoryGirl.define do
+  sequence :body do |n|
+    "Возможно #{n}"
+  end
+
   factory :answer do
-    body "Возможно 4"
+    body
     question
+    user
   end
 
   factory :invalid_answer, class: Answer do
