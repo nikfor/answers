@@ -6,11 +6,10 @@ feature "Сreate answer to the chosen question", %q{
   I want to be able create answer
 } do
   given(:user) { create(:user) }
-  given!(:question) { create(:question) }
+  given!(:question) { create(:question, user: user) }
 
-  scenario "Logged user create answer" do
+  scenario "Logged user create answer", js: true do
     sign_in(user.email, user.password)
-
     visit questions_path
     click_link question.title
     fill_in "Ваш ответ:", with: "Тут может быть много вариантов"
@@ -18,7 +17,9 @@ feature "Сreate answer to the chosen question", %q{
 
     expect(page).to have_content "Ваш ответ успешно создан."
     expect(current_path).to eq question_path(question)
-    expect(page).to have_content "Тут может быть много вариантов"
+    within ".answer" do
+      expect(page).to have_content "Тут может быть много вариантов"
+    end
   end
 
   scenario "Non logged user create answer" do

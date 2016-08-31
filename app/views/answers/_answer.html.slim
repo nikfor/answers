@@ -1,0 +1,3 @@
+.answer.panel.panel-default.clearfix
+  .panel-body = @answer.body
+  = link_to "Удалить ответ", answer_path(@answer), class: "btn btn-default", method: :delete
