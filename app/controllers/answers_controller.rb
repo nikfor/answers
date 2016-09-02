@@ -6,10 +6,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     if @answer.save
-      redirect_to @question, notice: "Ваш ответ успешно создан."
-    else
-      @answers = @question.answers.reload
-      render "questions/show"
+      flash.notice = "Ваш ответ успешно создан."
     end
   end
 

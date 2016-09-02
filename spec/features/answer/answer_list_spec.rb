@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../feature_helper"
 
 feature "Answers list", %q{
   In order to see all answers to a certain question

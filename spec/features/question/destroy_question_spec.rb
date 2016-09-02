@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../feature_helper"
 
 feature "Destroy question", %q{
   In order to will not see other users my question
