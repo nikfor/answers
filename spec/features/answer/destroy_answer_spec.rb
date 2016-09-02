@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../feature_helper"
 
 feature "Destroy answer", %q{
   In order to other users willn't see my answer

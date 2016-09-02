@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../feature_helper"
 
 feature "Сreate answer to the chosen question", %q{
   In order to respond chosen question
@@ -8,7 +8,7 @@ feature "Сreate answer to the chosen question", %q{
   given(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
 
-  scenario "Logged user create answer", js: true do
+  scenario "Logged user create valid answer", js: true do
     sign_in(user.email, user.password)
     visit questions_path
     click_link question.title
@@ -16,6 +16,19 @@ feature "Сreate answer to the chosen question", %q{
     click_on "Создать"
 
     expect(page).to have_content "Ваш ответ успешно создан."
+    expect(current_path).to eq question_path(question)
+    within ".answer" do
+      expect(page).to have_content "Тут может быть много вариантов"
+    end
+  end
+
+  scenario "Logged user create valid answer", js: true do
+    sign_in(user.email, user.password)
+    visit questions_path
+    click_link question.title
+    click_on "Создать"
+
+    expect(page).to have_content "Ответ не валиден. Отредактируйте и попробуйте снова."
     expect(current_path).to eq question_path(question)
     within ".answer" do
       expect(page).to have_content "Тут может быть много вариантов"
