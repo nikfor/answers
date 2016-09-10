@@ -9,3 +9,19 @@
 .answer .btn{
   float: right;
 }
+
+.edit_question_link{
+  margin: 10px;
+}
+
+.question_edit_form{
+  display: none;
+  position: fixed;
+  top: 250px;
+  left: 250px;
+  background-color: #CCCCFF;
+  width: 550px;
+  padding: 50px;
+  padding-top: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}

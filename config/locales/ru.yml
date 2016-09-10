@@ -9,3 +9,12 @@ ru:
               taken: "Пользователь с данным email уже зарегистрирован"
             password_confirmation:
               confirmation: "Пароль и подтверждение не совпадают"
+        answer:
+          attributes:
+            body:
+              blank: "Введите хоть что нибудь!"
+        question:
+          attributes:
+            body:
+              blank: "Данные вопроса не корректны!"
+

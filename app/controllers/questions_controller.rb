@@ -26,14 +26,15 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
   def update
-    if @question.update(question_params)
-      redirect_to @question
+    if current_user.owner_of?(@question)
+      if @question.update(question_params)
+        flash.notice = "Вопрос успешно отредактирован."
+      else
+        flash.alert = "Возникла ошибка проверьте данные!"
+      end
     else
-      render :edit
+      flash.alert = "Вы не можете редактировать чужой вопрос!"
     end
   end
 
