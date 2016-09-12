@@ -8,8 +8,10 @@ class Answer < ActiveRecord::Base
 
   def best!
     ActiveRecord::Base.transaction do
-      question.answers.each { |q| q.update_attributes!(best: false) }
-      update_attributes!(best: true)
+      if best_answer = question.answers.find_by(best: true)
+        best_answer.update!(best: false)
+      end
+      update!(best: true)
     end
   end
 
