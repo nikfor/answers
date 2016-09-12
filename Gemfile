@@ -19,11 +19,12 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'launchy'
 
 group :development, :test do
-  gem 'byebug'
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'database_cleaner'
   gem 'capybara-webkit'
+  gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 group :test do

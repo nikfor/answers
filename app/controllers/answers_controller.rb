@@ -1,12 +1,29 @@
 class AnswersController < ApplicationController
-  before_action :find_question, except: [:destroy]
-  before_action :find_answer, only: [:destroy]
+  before_action :authenticate_user!
+  before_action :find_question, except: [:destroy, :update, :best]
+  before_action :find_answer, only: [:destroy, :update, :best]
+
+  def show
+  end
 
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     if @answer.save
       flash.notice = "Ваш ответ успешно создан."
+    end
+  end
+
+  def update
+    @question = @answer.question
+    if current_user.owner_of?(@answer)
+      if @answer.update(answer_params)
+        flash.notice = "Ответ успешно отредактирован"
+      else
+        flash.alert = "Где то ошибка, проверьте ответ"
+      end
+    else
+      flash.alert = "Вы не можете редактировать чужой ответ"
     end
   end
 
@@ -17,7 +34,14 @@ class AnswersController < ApplicationController
     else
       flash.alert = "Вы не можете удалять чужие ответы"
     end
-    redirect_to @answer.question
+  end
+
+  def best
+    if current_user.owner_of?(@answer.question)
+      @answer.best!
+    else
+      flash.alert = "Это чужой вопрос!"
+    end
   end
 
   private
@@ -33,5 +57,4 @@ class AnswersController < ApplicationController
   def find_answer
     @answer = Answer.find(params[:id])
   end
-
 end

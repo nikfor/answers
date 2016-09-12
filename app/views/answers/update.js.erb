@@ -1,9 +1,8 @@
 <% if @answer.errors.present? %>
   <% @answer.errors.full_messages.each do |message| %>
-    $("#answer_body").before("<%= message %>")
+    $(".question_form_errors").html("<%= message %>")
   <% end %>
 <% else %>
-  $(".answers_read").append("<%= j render @answer %>");
-  $(".create_answer_form textarea").val("");
+  $(".answer_"+<%=@answer.id%>).html("<%= j render @answer %>");
   $(".alert").html("<%= flash[:notice] %>");
 <% end %>

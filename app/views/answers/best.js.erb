@@ -1,0 +1,5 @@
+
+$(".best_mark").detach();
+$(".answer_"+<%=@answer.id%>).detach();
+$(".answers_read").prepend("<%= j render @answer %>");
+$(".alert").html("<%= flash[:notice] %>");

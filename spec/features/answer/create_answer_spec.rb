@@ -12,6 +12,7 @@ feature "Сreate answer to the chosen question", %q{
     sign_in(user.email, user.password)
     visit questions_path
     click_link question.title
+
     fill_in "Ваш ответ:", with: "Тут может быть много вариантов"
     click_on "Создать"
 
@@ -22,21 +23,20 @@ feature "Сreate answer to the chosen question", %q{
     end
   end
 
-  scenario "Logged user create valid answer", js: true do
+  scenario "Logged user create invalid answer", js: true do
     sign_in(user.email, user.password)
     visit questions_path
     click_link question.title
+
     click_on "Создать"
 
-    expect(page).to have_content "Ответ не валиден. Отредактируйте и попробуйте снова."
+    expect(page).to have_content "Введите хоть что нибудь!"
     expect(current_path).to eq question_path(question)
-    within ".answer" do
-      expect(page).to have_content "Тут может быть много вариантов"
-    end
   end
 
   scenario "Non logged user create answer" do
     visit questions_path
+
     click_link question.title
 
     expect(page).to_not have_content "Ваш ответ"

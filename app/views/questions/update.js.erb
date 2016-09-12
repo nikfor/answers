@@ -1,0 +1,10 @@
+<% if @question.errors.present? %>
+  <% @question.errors.full_messages.each do |message| %>
+    $(".question_form_errors").html("<%= message %>")
+  <% end %>
+<% else %>
+  $(".question-block > .panel-heading").html("<%= j @question.title %>");
+  $(".question-block > .panel-body").html("<%= j @question.body %>");
+  $(".question_edit_form").hide();
+  $(".alert").html("<%= flash[:notice] %>");
+<% end %>
