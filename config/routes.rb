@@ -3,9 +3,7 @@ Rails.application.routes.draw do
 
   resources :questions do
     resources :answers, shallow: true do
-      member do
-        post 'best'
-      end
+      post :best, on: :member
     end
   end
 

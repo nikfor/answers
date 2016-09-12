@@ -16,7 +16,9 @@ RSpec.describe Answer, type: :model do
   end
 
   it "doesn't make best other answer" do
+    answer2.update(best: true)
     answer.best!
+    answer2.reload
     expect(answer2).to_not be_best
   end
 end

@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_question, except: [:destroy, :update, :best]
   before_action :find_answer, only: [:destroy, :update, :best]
-  before_action :authenticate_user!
 
   def show
   end
