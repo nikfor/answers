@@ -10,9 +10,13 @@ RSpec.describe Answer, type: :model do
   let!(:answer) { create(:answer, question: question) }
   let!(:answer2) { create(:answer, question: question) }
 
-  it "set best field of answer to true" do
+  it "make best answer" do
     answer.best!
-    expect(answer.best).to eq true
-    expect(answer2.best).to eq false
+    expect(answer).to be_best
+  end
+
+  it "doesn't make best other answer" do
+    answer.best!
+    expect(answer2).to_not be_best
   end
 end

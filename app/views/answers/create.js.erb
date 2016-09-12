@@ -3,7 +3,7 @@
     $("#answer_body").before("<%= message %>")
   <% end %>
 <% else %>
-  $(".answers_read").append("<%= j render 'answer', answer: @answer %>");
+  $(".answers_read").append("<%= j render @answer %>");
   $(".create_answer_form textarea").val("");
   $(".alert").html("<%= flash[:notice] %>");
 <% end %>

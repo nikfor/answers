@@ -1,24 +1,22 @@
 class AnswersController < ApplicationController
   before_action :find_question, except: [:destroy, :update, :best]
   before_action :find_answer, only: [:destroy, :update, :best]
-
+  before_action :authenticate_user!
 
   def show
   end
 
   def create
-    if current_user
-      @answer = @question.answers.new(answer_params)
-      @answer.user = current_user
-      if @answer.save
-        flash.notice = "Ваш ответ успешно создан."
-      end
+    @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
+    if @answer.save
+      flash.notice = "Ваш ответ успешно создан."
     end
   end
 
   def update
     @question = @answer.question
-    if current_user && current_user.owner_of?(@answer)
+    if current_user.owner_of?(@answer)
       if @answer.update(answer_params)
         flash.notice = "Ответ успешно отредактирован"
       else
@@ -30,7 +28,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user &&  current_user.owner_of?(@answer)
+    if current_user.owner_of?(@answer)
       @answer.destroy
       flash.notice = "Ответ успешно удален"
     else
@@ -39,7 +37,7 @@ class AnswersController < ApplicationController
   end
 
   def best
-    if current_user && current_user.owner_of?(@answer.question)
+    if current_user.owner_of?(@answer.question)
       @answer.best!
     else
       flash.alert = "Это чужой вопрос!"
@@ -59,5 +57,4 @@ class AnswersController < ApplicationController
   def find_answer
     @answer = Answer.find(params[:id])
   end
-
 end

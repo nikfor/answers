@@ -14,7 +14,7 @@
 
   .answers-block
     .answers_read
-      = render partial: @question.answers
+      = render @question.answers
     - if current_user
       = simple_form_for [@question, @answer], html:{ class: "create_answer_form" }, remote: true do |f|
         = f.input :body, label: "Ваш ответ:", as: :text, class: "text_field"

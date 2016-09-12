@@ -1,15 +1,16 @@
 - if answer.persisted?
   div class = "answer_#{answer.id} answer panel panel-default clearfix"
-    - if answer.best
+    - if answer.best?
       .best_mark
         span.label.label-success best
     .panel-body = answer.body
-    - if current_user && current_user.owner_of?(answer)
+    - if user_signed_in? && current_user.owner_of?(answer)
       = link_to "Удалить ответ", answer_path(answer), class: "btn btn-default", method: :delete, remote: true
       = link_to "Редактировать", "", class: "edit_answer_link btn btn-default", data: { answer_id: answer.id }
-    - if current_user && current_user.owner_of?(answer.question)
+    - if user_signed_in? && current_user.owner_of?(answer.question)
       = link_to "Лучший ответ", best_answer_path(answer), method: :post, remote: true, class: "best_answer_link btn btn-default"
-      p
-        = simple_form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
-          = f.input :body, label: "Новый ответ", as: :text, class: "text_field"
-          = f.button :submit, "Сохранить", class: "left_btn"
+    p
+      = simple_form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
+        = f.input :body, label: "Новый ответ", as: :text, class: "text_field"
+        = f.button :submit, "Сохранить", class: "left_btn"
+

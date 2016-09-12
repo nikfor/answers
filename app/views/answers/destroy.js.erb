@@ -1,2 +1,2 @@
-$(".answer_"+<%=@answer.id%>).detach();
+$(".answer_"+<%=@answer.id%>).remove();
 $(".alert").html("<%= flash[:notice] %>");

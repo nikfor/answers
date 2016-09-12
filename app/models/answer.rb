@@ -9,8 +9,10 @@ class Answer < ActiveRecord::Base
   end
 
   def best!
-    question.answers.update_all(best: false)
-    update_attributes(best: true)
+    ActiveRecord::Base.transaction do
+      question.answers.update_all(best: false)
+      update_attributes!(best: true)
+    end
   end
 
 end
