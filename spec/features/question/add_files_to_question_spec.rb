@@ -16,9 +16,9 @@ feature 'Add files to question', %q{
   scenario "user add files when he create question" do
     fill_in "Заголовок", with: "What?"
     fill_in "Вопрос", with: "What? What? What? Abcdf Test"
-    attach_file "Файл", "#{Rails.root}/spec/cotrollers/answers_controller_spec.rb"
+    attach_file "Файл", "#{Rails.root}/spec/controllers/answers_controller_spec.rb"
     click_on "Создать"
 
-    expect(page).to have_content "answers_controller_spec.rb"
+    expect(page).to have_link "answers_controller_spec.rb", href: "/uploads/attachment/file/1/answers_controller_spec.rb"
   end
 end
