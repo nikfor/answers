@@ -17,6 +17,7 @@ gem 'devise'
 gem 'simple_form'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'launchy'
+gem 'carrierwave'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
