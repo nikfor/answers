@@ -1,4 +1,4 @@
-  require 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { FactoryGirl.create(:question, title: "Сколько будет 2+2 ?") }
@@ -26,6 +26,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     it "assigns new answer for question" do
       expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
+    it "buid new attachment for @answer" do
+      expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
     end
 
     it "render show view" do

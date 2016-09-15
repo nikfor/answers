@@ -21,4 +21,7 @@
     - if current_user
       = simple_form_for [@question, @answer], html:{ class: "create_answer_form" }, remote: true do |f|
         = f.input :body, label: "Ваш ответ:", as: :text, class: "text_field"
+        p
+          = f.simple_fields_for :attachments do |a|
+            = a.input :file, label: "Файл"
         = f.button :submit, "Создать", class: "left_btn"

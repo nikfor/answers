@@ -18,6 +18,7 @@ gem 'simple_form'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'launchy'
 gem 'carrierwave'
+gem 'remotipart'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'

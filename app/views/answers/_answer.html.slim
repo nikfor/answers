@@ -9,6 +9,9 @@
       = link_to "Редактировать", "", class: "edit_answer_link btn btn-default", data: { answer_id: answer.id }
     - if user_signed_in? && current_user.owner_of?(answer.question)
       = link_to "Лучший ответ", best_answer_path(answer), method: :post, remote: true, class: "best_answer_link btn btn-default"
+    ul.attach_answer
+      - answer.attachments.each do |a|
+        li = link_to a.file.identifier, a.file.url
     p
       = simple_form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
         = f.input :body, label: "Новый ответ", as: :text, class: "text_field"
