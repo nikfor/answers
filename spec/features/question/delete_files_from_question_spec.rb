@@ -27,7 +27,7 @@ feature "Delete files from question", %q{
 
   scenario "user doesn't see delete file links from another user question", js: true do
     visit question_path(question)
-    within "<div class="question-block"></div>" do
+    within ".question-block" do
       expect(page).to_not have_link "Удалить файл"
     end
   end
