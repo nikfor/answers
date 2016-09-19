@@ -3,5 +3,7 @@
   = f.input :body, label: "Вопрос", as: :text, class: "text_field"
   p
     = f.simple_fields_for :attachments do |a|
-      = a.input :file, label: "Файл"
+        = render "attachment_fields", f: a
+    .links
+      = link_to_add_association 'добавить файл', f, :attachments
   = f.button :submit, "Создать", class: "left_btn"

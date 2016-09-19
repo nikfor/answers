@@ -3,9 +3,7 @@
     .panel-heading = @question.title
     .panel-body
       = @question.body
-      ul.attach_question
-      - @question.attachments.each do |a|
-        li = link_to a.file.identifier, a.file.url
+      = render "attachments", obj: @question
     - if current_user && current_user.owner_of?(@question)
       = link_to "Редактировать", "", class: "edit_question_link btn btn-default pull-right", data: { question_id: @question.id }
       = simple_form_for @question, html:{ class: "question_edit_form" }, remote: true do |f|
@@ -23,5 +21,7 @@
         = f.input :body, label: "Ваш ответ:", as: :text, class: "text_field"
         p
           = f.simple_fields_for :attachments do |a|
-            = a.input :file, label: "Файл"
+            = render "attachment_fields", f: a
+          .links
+            = link_to_add_association 'добавить файл', f, :attachments
         = f.button :submit, "Создать", class: "left_btn"
