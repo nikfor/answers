@@ -1,9 +1,10 @@
 .question-answer-block
   .question-block.panel.panel-info.clearfix
     .panel-heading = @question.title
-    .panel-body = @question.body
+    .panel-body
+      = @question.body
+      = render "attachments", obj: @question
     - if current_user && current_user.owner_of?(@question)
-      pry
       = link_to "Редактировать", "", class: "edit_question_link btn btn-default pull-right", data: { question_id: @question.id }
       = simple_form_for @question, html:{ class: "question_edit_form" }, remote: true do |f|
         h2 Редактирование вопроса
@@ -18,4 +19,9 @@
     - if current_user
       = simple_form_for [@question, @answer], html:{ class: "create_answer_form" }, remote: true do |f|
         = f.input :body, label: "Ваш ответ:", as: :text, class: "text_field"
+        p
+          = f.simple_fields_for :attachments do |a|
+            = render "attachment_fields", f: a
+          .links
+            = link_to_add_association 'добавить файл', f, :attachments
         = f.button :submit, "Создать", class: "left_btn"

@@ -17,6 +17,9 @@ gem 'devise'
 gem 'simple_form'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'launchy'
+gem 'carrierwave'
+gem 'remotipart'
+gem 'cocoon', '~> 1.2', '>= 1.2.9'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
