@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.configure do |config|
   config.include FeatureMacros, type: :feature
+  config.use_transactional_fixtures = false
 
   Capybara.javascript_driver = :webkit
   Capybara.default_max_wait_time = 5
