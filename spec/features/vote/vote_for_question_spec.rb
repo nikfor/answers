@@ -42,10 +42,9 @@ feature "Voting for the question", %q{
     scenario "logged user cancel voted sign", js: true do
       within '.question-block' do
         click_link "+"
-        # click_link "Отмена"       почему то удаляется весь вопрос
-        question.cancel_vote(mike)
-
-        # expect(page).to_not have_content "Отмена"
+        click_link "Отмена"       #почему то удаляется весь вопрос
+        # question.cancel_vote(mike)
+        expect(page).to_not have_content "Отмена"
         within '.total' do
           expect(page).to have_content "0"
         end

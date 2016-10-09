@@ -14,16 +14,11 @@ module Voted
   end
 
   def nullify_vote
-    respond_to do |format|
-      if @voteable.user_voted?(current_user)
-        if @voteable.cancel_vote(current_user)
-          format.json{ render json: {total: @voteable.total, id: @voteable.id} }
-        else
-          format.json{ render json: @voteable.errors.full_messages, status: :unprocessable_entity }
-        end
-      else
-        format.json { render json: { error: "Вы не можете отменить голос не проголосовав!", id: @voteable.id }, status: :unprocessable_entity }
-      end
+    if current_user.voted?(@voteable)
+      @voteable.cancel_vote(current_user)
+      render json: {total: @voteable.total, id: @voteable.id}
+    else
+      render json: { error: "Вы не можете отменить голос не проголосовав!", id: @voteable.id }, status: :unprocessable_entity
     end
   end
 
@@ -34,32 +29,30 @@ module Voted
   end
 
   def voting(vote_value)
-    respond_to do |format|
-      if user_signed_in? && current_user.can_vote?(@voteable)
-        if @voteable.user_voted?(current_user)
-          changing_vote(vote_value, format)
-        else
-          creating_vote(vote_value, format)
-        end
+    if user_signed_in? && current_user.can_vote?(@voteable)
+      if current_user.voted?(@voteable)
+        changing_vote(vote_value)
       else
-        format.json { render json: { error: "Вы не можете голосовать за свой вопрос или ответ!", id: @voteable.id }, status: :unprocessable_entity }
+        creating_vote(vote_value)
       end
+    else
+      render json: { error: "Вы не можете голосовать за свой вопрос или ответ!", id: @voteable.id }, status: :unprocessable_entity
     end
   end
 
-  def changing_vote(vote_value, format)
+  def changing_vote(vote_value)
     if @voteable.change_vote!(vote_value, current_user)
-      format.json{ render json: { total: @voteable.total, id: @voteable.id } }
+      render json: { total: @voteable.total, id: @voteable.id }
     else
-      format.json{ render json: @voteable.errors.full_messages, id: @voteable.id, status: :unprocessable_entity }
+      render json: @voteable.errors.full_messages, id: @voteable.id, status: :unprocessable_entity
     end
   end
 
-  def creating_vote(vote_value, format)
+  def creating_vote(vote_value)
     if @voteable.create_vote(vote_value, current_user)
-      format.json{ render json: { total: @voteable.total, id: @voteable.id } }
+      render json: { total: @voteable.total, id: @voteable.id }
     else
-      format.json{ render json: @voteable.errors.full_messages, id: @voteable.id, status: :unprocessable_entity }
+      render json: @voteable.errors.full_messages, id: @voteable.id, status: :unprocessable_entity
     end
   end
 

@@ -15,4 +15,9 @@ class User < ActiveRecord::Base
   def can_vote?(voteable)
     id != voteable.user_id
   end
+
+  def voted?(voteable)
+    !votes.where(voteable: voteable).empty?
+  end
+
 end

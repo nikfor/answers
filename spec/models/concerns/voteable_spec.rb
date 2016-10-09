@@ -6,18 +6,6 @@ RSpec.shared_examples_for "voteable" do
   let(:user) { create(:user) }
   let(:vote_yea) { create(:yea, voteable: voteable) }
 
-  describe "#user_voted?" do
-    it "user voted" do
-      vote_yea.update(user: user)
-      voteable.reload
-      expect(voteable).to be_user_voted(user)
-    end
-
-    it "user doesn't vote" do
-      expect(voteable).to_not be_user_voted(user)
-    end
-  end
-
   describe "#create_vote" do
     it 'vote yea' do
       voteable.create_vote(1, user)

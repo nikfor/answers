@@ -7,6 +7,7 @@ ready = ->
     $(this).hide();
     answer_id = $(this).data('answerId')
     $('form#edit-answer-' + answer_id).show()
+vote_ready = ->
   $('.vote_link').bind 'ajax:success', (e, data, status, xhr) ->
     voteable = $.parseJSON(xhr.responseText);
     $('#total-votes-' + voteable.id).html(voteable.total)
@@ -24,4 +25,6 @@ ready = ->
 $(document).ready(ready)
 $(document).on('page:load', ready)
 $(document).on('page:update', ready)
-$(document).on("turbolinks:load", ready)
+$(document).on('turbolinks:load', ready)
+
+$(document).ready(vote_ready)

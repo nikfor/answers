@@ -5,10 +5,6 @@ module Voteable
     has_many :votes, as: :voteable
   end
 
-  def user_voted?(user)
-    !votes.where(user: user).empty?
-  end
-
   def create_vote(val, user)
     votes.create(user: user, value: val)
   end
