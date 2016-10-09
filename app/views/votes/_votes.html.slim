@@ -1,0 +1,6 @@
+.vote_block
+  .plus = link_to "+", polymorphic_path([:yea, voteable]), class: "yea vote_link", id: voteable.id, method: :post, remote: true, data: { type: :json }
+  .total id="total-votes-#{voteable.id}" = voteable.total
+  .minus = link_to "-", polymorphic_path([:nay, voteable]), class: "nay vote_link", id: voteable.id, method: :post, remote: true, data: { type: :json }
+  .cancel = link_to "Отмена", polymorphic_path([:nullify_vote, voteable]), class: "cancel_l vote_link", id: voteable.id, style: "#{'display: none' unless user_signed_in? && current_user.voted?(voteable)}", method: :delete, remote: true, data: { type: :json }
+  .vote_errors id="errors-voteable-#{voteable.id}"

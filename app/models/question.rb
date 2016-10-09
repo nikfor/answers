@@ -1,4 +1,7 @@
 class Question < ActiveRecord::Base
+  include Attachable
+  include Voteable
+
   has_many :answers, dependent: :destroy
   has_many :attachments, as: :attachable
   belongs_to :user
