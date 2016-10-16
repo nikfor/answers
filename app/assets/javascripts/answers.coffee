@@ -20,6 +20,10 @@ vote_ready = ->
     $('#' + this.id + '.cancel_l').toggle(true);
   $('.yea').click (e) ->
     $('#' + this.id + '.cancel_l').toggle(true);
+  $('.comment_answer_link').click (e) ->
+    answer_id = $(this).data('answerId')
+    e.preventDefault();
+    $('.answers-block .answer_' + answer_id + ' .new_comment').show()
 
 
 $(document).ready(ready)

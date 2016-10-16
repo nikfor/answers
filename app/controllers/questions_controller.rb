@@ -15,18 +15,18 @@ class QuestionsController < ApplicationController
     @answer.attachments.build
   end
 
-  def new
-    @question = Question.new
-    @question.attachments.build
-  end
+  # def new
+  #   @question = Question.new
+  #   @question.attachments.build
+  # end
 
   def create
     @question = Question.new(question_params)
     @question.user = current_user
     if @question.save
-      redirect_to @question, notice: "Ваш вопрос успешно создан."
+      flash.notice = "Ваш вопрос успешно создан."
     else
-      render :new
+      flash.alert = "Возникла ошибка проверьте данные!"
     end
   end
 

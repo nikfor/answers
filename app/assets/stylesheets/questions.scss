@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .question-answer-block{
-  width: 600px;
+  width: 800px;
 }
 
 .answer .btn{
@@ -14,9 +14,27 @@
   margin: 10px;
 }
 
+.comment_question_link{
+  margin: 10px;
+}
+
 .question_edit_form{
   display: none;
   position: fixed;
+  z-index: 10;
+  top: 250px;
+  left: 250px;
+  background-color: #CCCCFF;
+  width: 550px;
+  padding: 50px;
+  padding-top: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.question_new_form{
+  display: none;
+  position: fixed;
+  z-index: 10;
   top: 250px;
   left: 250px;
   background-color: #CCCCFF;

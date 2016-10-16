@@ -3,7 +3,9 @@
     $("#answer_body").before("<%= message %>")
   <% end %>
 <% else %>
-  $(".answers_read").append("<%= j render @answer %>");
+  <% publish_to "/questions/#{@question.id}/answers" do %>
+    $(".answers_read").append("<%= j render @answer %>");
+  <% end %>
   $(".create_answer_form textarea").val("");
   $(".alert").html("<%= flash[:notice] %>");
 <% end %>

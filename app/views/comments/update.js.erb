@@ -1,0 +1,8 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+    $(".question_form_errors").html("<%= message %>")
+  <% end %>
+<% else %>
+  $(".comment_"+<%=@comment.id%>).html("<%= j render @comment %>");
+  $(".alert").html("<%= flash[:notice] %>");
+<% end %>
