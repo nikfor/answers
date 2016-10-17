@@ -299,6 +299,7 @@ DEPENDENCIES
   pry-rails
   rails (= 4.2.6)
   remotipart
+  responders (~> 2.0)
   rspec-rails (~> 3.5)
   rubocop
   sass-rails (~> 5.0)

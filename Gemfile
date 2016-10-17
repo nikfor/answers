@@ -22,6 +22,7 @@ gem 'remotipart'
 gem 'cocoon', '~> 1.2', '>= 1.2.9'
 gem 'private_pub'
 gem 'thin'
+gem 'responders', '~> 2.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
