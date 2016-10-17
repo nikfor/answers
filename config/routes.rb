@@ -10,8 +10,10 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: [:voteable] do
+    resources :comments, shallow: true,  defaults: { commentable: "question" }
     resources :answers, concerns: [:voteable], shallow: true do
       post :best, on: :member
+      resources :comments, shallow: true, defaults: { commentable: "answer" }
     end
   end
 

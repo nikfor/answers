@@ -7,7 +7,7 @@ feature "Create question", %q{
 } do
   given(:user) { create(:user) }
 
-  scenario "Logged user ask question" do
+  scenario "Logged user ask question", js: true  do
     sign_in(user.email, user.password)
 
     visit questions_path
@@ -17,6 +17,7 @@ feature "Create question", %q{
     click_on "Создать"
 
     expect(page).to have_content "Ваш вопрос успешно создан."
+    visit questions_path
     expect(page).to have_content "What? Abcdf Test"
   end
 

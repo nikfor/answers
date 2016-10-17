@@ -1,0 +1,12 @@
+<% if @question.errors.present? %>
+  <% @question.errors.full_messages.each do |message| %>
+    $(".question_form_errors").html("<%= message %>")
+  <% end %>
+<% else %>
+  <% publish_to "/questions" do %>
+    $(".questions_table > tbody").append("<tr> <td class='number'><%= @question.id %></td><td class='title'><%= j link_to @question.title, question_path(@question) %></td> <td class='delete'><%= j link_to 'Удалить', question_path(@question), method: :delete if current_user && current_user.owner_of?(@question)%></td> </tr>")
+  <% end %>
+  $(".question_new_form").hide();
+  $(".alert").html("<%= flash[:notice] %>");
+<% end %>
+

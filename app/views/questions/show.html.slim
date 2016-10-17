@@ -8,6 +8,9 @@
       .text-body.col-md-11
         = @question.body
         = render "attachments", obj: @question
+        = render "comments/comments", commentable: @question
+      - if user_signed_in?
+        = link_to "Комментировать", "", class: "comment_question_link btn btn-default pull-right"
       - if current_user && current_user.owner_of?(@question)
         = link_to "Редактировать", "", class: "edit_question_link btn btn-default pull-right", data: { question_id: @question.id }
         = simple_form_for @question, html:{ class: "question_edit_form" }, remote: true do |f|
@@ -29,3 +32,6 @@
           .links
             = link_to_add_association 'добавить файл', f, :attachments
         = f.button :submit, "Создать", class: "left_btn"
+
+= subscribe_to "/questions/#{@question.id}/answers"
+= subscribe_to "/questions/#{@question.id}/comments"

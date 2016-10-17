@@ -17,7 +17,7 @@ feature "Voting for the answer", %q{
     end
 
     scenario "logged user votes +1", js: true do
-      within '.question-block' do
+      within ".answer_#{answer.id}" do
         click_link "+"
         within '.total' do
           expect(page).to have_content "1"

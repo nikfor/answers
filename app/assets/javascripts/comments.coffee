@@ -2,20 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+
 ready = ->
-  $('.edit_question_link').click (e) ->
+  $('.edit_comment_link').click (e) ->
+    comment_id = $(this).data('commentId');
     e.preventDefault();
-    $(this).hide();
-    $('form.question_edit_form').show()
-  $('.new_question_link').click (e) ->
-    e.preventDefault();
-    $('form.question_new_form').show()
+    $('form#'+comment_id+'.edit_comment').show()
   $('.cancel_form_link').click (e) ->
     e.preventDefault();
-    $('form.question_new_form').hide()
-  $('.comment_question_link').click (e) ->
-    e.preventDefault();
-    $('.question-block .new_comment').show()
+    $('form.edit_comment').hide()
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

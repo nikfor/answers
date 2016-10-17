@@ -1,0 +1,9 @@
+- if comment.persisted?
+  li class = "comment_#{comment.id} comment bg-info"
+    .row
+      span = comment.body
+    .row.clearfix
+      - if user_signed_in? && current_user.owner_of?(comment)
+        = link_to "Удалить комментарий", comment_path(comment), class: "delete_comment_link btn btn-primary btn-xs pull-right", method: :delete, remote: true
+        = link_to "Редактировать комментарий", "", class: "edit_comment_link btn btn-primary btn-xs pull-right", data: { comment_id: comment.id }
+    = render "comments/form_edit_comment", comment: comment

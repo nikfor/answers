@@ -1,0 +1,6 @@
+= simple_form_for comment, remote: true, html: { class: "edit_comment", id: comment.id} do |f|
+  h1 Редактирование комментария
+  = f.input :body, label: "Текст", as: :text, class: "text_field"
+  = link_to "Отмена", '', class: "cancel_form_link btn btn-default pull-right"
+  = f.button :submit, "Сохранить", class: "left_btn"
+

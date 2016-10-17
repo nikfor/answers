@@ -5,28 +5,25 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: [:show, :edit, :update, :destroy]
 
+  respond_to :html, only: [:index, :show]
+
   def index
-    @questions = Question.all
+    respond_with (@questions = Question.all)
   end
 
   def show
-    @answers = @question.answers
     @answer = @answers.new
     @answer.attachments.build
-  end
-
-  def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with @question
   end
 
   def create
     @question = Question.new(question_params)
     @question.user = current_user
     if @question.save
-      redirect_to @question, notice: "Ваш вопрос успешно создан."
+      flash.notice = "Ваш вопрос успешно создан."
     else
-      render :new
+      flash.alert = "Возникла ошибка проверьте данные!"
     end
   end
 

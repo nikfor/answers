@@ -1,0 +1,17 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+    $("#answer_body").before("<%= j  message %>")
+  <% end %>
+<% else %>
+  <% if @commentable.class == Question %>
+    <% publish_to "/questions/#{@commentable.id}/comments" do %>
+      $(".question-block .comments-list").append("<%= j render @comment %>");
+    <% end %>
+  <% else %>
+    <% publish_to "/questions/#{@commentable.question_id}/comments" do %>
+      $(".answers-block .answer_"+<%= @commentable.id %>+" .comments-list").append("<%= j render @comment %>");
+    <% end %>
+  <% end %>
+  $("form.new_comment textarea").val("");
+  $(".alert").html("<%= flash[:notice] %>");
+<% end %>

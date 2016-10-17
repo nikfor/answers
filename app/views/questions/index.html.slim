@@ -1,7 +1,7 @@
 .question-list
   h1 Вопросы
   - unless @questions.empty?
-    table.table.table-stripped
+    table.table.table-stripped.questions_table
       tr
         th Номер
         th Название
@@ -12,4 +12,19 @@
           td.title = link_to q.title, question_path(q)
           td.delete = link_to "Удалить", question_path(q), method: :delete if current_user && current_user.owner_of?(q)
 
+= simple_form_for @questions.new, html:{ class: "question_new_form" }, remote: true do |f|
+  h2 Создание вопроса
+  .question_form_errors
+  = f.input :title, label: "Заголовок"
+  = f.input :body, label: "Вопрос", as: :text, class: "text_field"
+  p
+    = f.simple_fields_for :attachments do |a|
+        = render "attachment_fields", f: a
+    .links
+      = link_to_add_association 'добавить файл', f, :attachments
+  = link_to "Отмена", '', class: "cancel_form_link btn btn-default right_btn pull-right"
+  = f.button :submit, "Создать", class: "right_btn pull-right"
+
+s
+= subscribe_to "/questions"
 

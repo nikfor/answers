@@ -15,7 +15,7 @@
       <ul class="nav navbar-nav">
         <li><%= link_to "Вопросы", questions_path %></li>
         <% if current_user %>
-          <li><%= link_to "Задать вопрос", new_question_path %></li>
+          <li><%= link_to "Задать вопрос", '', class: "new_question_link" %></li>
           <li class="reg-btns"><%= link_to current_user.email, edit_user_password_path %></a></li>
           <li class="reg-btns"><%=link_to "Выйти", destroy_user_session_path, method: :delete %></li>
         <% else %>
