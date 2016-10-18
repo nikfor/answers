@@ -16,8 +16,7 @@ feature "Create question", %q{
     fill_in "Вопрос", with: "What? What? What?"
     click_on "Создать"
 
-    expect(page).to have_content "Ваш вопрос успешно создан."
-    visit questions_path
+    expect(page).to have_content "Вопрос успешно создан."
     expect(page).to have_content "What? Abcdf Test"
   end
 

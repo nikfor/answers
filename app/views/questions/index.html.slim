@@ -1,11 +1,11 @@
 .question-list
   h1 Вопросы
-  - unless @questions.empty?
-    table.table.table-stripped.questions_table
-      tr
-        th Номер
-        th Название
-        th Удалить
+  table.table.table-stripped.questions_table
+    tr
+      th Номер
+      th Название
+      th Удалить
+    - unless @questions.empty?
       - @questions.each do |q|
         tr
           td.number = q.id

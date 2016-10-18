@@ -8,5 +8,7 @@
   <% end %>
   $(".question_new_form").hide();
   $(".alert").html("<%= flash[:notice] %>");
+  $(".alert").addClass("alert-success");
+  $(".alert").append("<%= flash[:alert] %>");
 <% end %>
 

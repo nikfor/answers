@@ -4,36 +4,27 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :build_answer, only: [:show]
 
-  respond_to :html, only: [:index, :show]
+  respond_to :html
+  respond_to :js, only: [:create, :update]
 
   def index
     respond_with (@questions = Question.all)
   end
 
   def show
-    @answer = @answers.new
-    @answer.attachments.build
     respond_with @question
   end
 
   def create
-    @question = Question.new(question_params)
-    @question.user = current_user
-    if @question.save
-      flash.notice = "Ваш вопрос успешно создан."
-    else
-      flash.alert = "Возникла ошибка проверьте данные!"
-    end
+    respond_with (@question = Question.create(question_params.merge(user_id: current_user.id)))
   end
 
   def update
     if current_user.owner_of?(@question)
-      if @question.update(question_params)
-        flash.notice = "Вопрос успешно отредактирован."
-      else
-        flash.alert = "Возникла ошибка проверьте данные!"
-      end
+      @question.update(question_params)
+      respond_with @question
     else
       flash.alert = "Вы не можете редактировать чужой вопрос!"
     end
@@ -41,12 +32,10 @@ class QuestionsController < ApplicationController
 
   def destroy
     if current_user.owner_of?(@question)
-      @question.destroy
-      flash.notice = "Вопрос успешно удален"
+      respond_with @question.destroy
     else
-      flash.alert = "Вы не можете удалять чужие вопросы"
+      redirect_to questions_path, alert: "Вы не можете удалять чужие вопросы"
     end
-    redirect_to questions_path
   end
 
   private
@@ -58,4 +47,9 @@ class QuestionsController < ApplicationController
   def find_question
     @question = Question.find(params[:id])
   end
+
+  def build_answer
+    @answer = @question.answers.build
+  end
+
 end

@@ -27,7 +27,7 @@
       = simple_form_for [@question, @answer], html:{ class: "create_answer_form" }, remote: true do |f|
         = f.input :body, label: "Ваш ответ:", as: :text, class: "text_field"
         p
-          = f.simple_fields_for :attachments do |a|
+          = f.simple_fields_for :attachments, @answer.attachments.build do |a|
             = render "attachment_fields", f: a
           .links
             = link_to_add_association 'добавить файл', f, :attachments

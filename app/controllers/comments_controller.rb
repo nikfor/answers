@@ -4,21 +4,16 @@ class CommentsController < ApplicationController
   before_action :find_comment, only: [:destroy, :update]
   before_action :find_commentable, only: [:create]
 
+  respond_to :js
+
   def create
-    @comment = @commentable.comments.new(comment_params)
-    @comment.user = current_user
-    if @comment.save
-      flash.notice = "Комментарий успешно создан."
-    end
+    respond_with(@comment = @commentable.comments.create(comment_params.merge(user_id: current_user.id)))
   end
 
   def update
     if current_user.owner_of?(@comment)
-      if @comment.update(comment_params)
-        flash.notice = "Комментарий успешно отредактирован"
-      else
-        flash.alert = "Где то ошибка, проверьте комментарий"
-      end
+      @comment.update(comment_params)
+      respond_with @comment
     else
       flash.alert = "Вы не можете редактировать чужой комментарий"
     end
@@ -26,8 +21,7 @@ class CommentsController < ApplicationController
 
   def destroy
     if current_user.owner_of?(@comment)
-      @comment.destroy
-      flash.notice = "Комментарий успешно удален"
+      respond_with @comment.destroy
     else
       flash.alert = "Вы не можете удалять чужие комментарии"
     end
