@@ -6,25 +6,19 @@ class AnswersController < ApplicationController
   before_action :find_question, only: [:show, :create]
   before_action :find_answer, only: [:destroy, :update, :best]
 
+  respond_to :js
+
   def show
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-    if @answer.save
-      flash.notice = "Ваш ответ успешно создан."
-    end
+    respond_with(@answer = @question.answers.create(answer_params.merge(user_id: current_user.id)))
   end
 
   def update
-    @question = @answer.question
     if current_user.owner_of?(@answer)
-      if @answer.update(answer_params)
-        flash.notice = "Ответ успешно отредактирован"
-      else
-        flash.alert = "Где то ошибка, проверьте ответ"
-      end
+      @answer.update(answer_params)
+      respond_with @answer
     else
       flash.alert = "Вы не можете редактировать чужой ответ"
     end
@@ -32,8 +26,7 @@ class AnswersController < ApplicationController
 
   def destroy
     if current_user.owner_of?(@answer)
-      @answer.destroy
-      flash.notice = "Ответ успешно удален"
+      respond_with(@answer.destroy)
     else
       flash.alert = "Вы не можете удалять чужие ответы"
     end

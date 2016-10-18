@@ -16,7 +16,7 @@ feature "Сreate answer to the chosen question", %q{
     fill_in "Ваш ответ:", with: "Тут может быть много вариантов"
     click_on "Создать"
 
-    expect(page).to have_content "Ваш ответ успешно создан."
+    expect(page).to have_content "Ответ успешно создан."
     expect(current_path).to eq question_path(question)
     within ".answer" do
       expect(page).to have_content "Тут может быть много вариантов"

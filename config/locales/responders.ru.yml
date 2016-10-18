@@ -1,0 +1,42 @@
+ru:
+  flash:
+    actions:
+      create:
+        notice: '%{resource_name} успешно создан.'
+        alert: '%{resource_name} не возможно создать.'
+      update:
+        notice: '%{resource_name} успешно изменен.'
+        alert: '%{resource_name} не возможно изменить.'
+      destroy:
+        notice: '%{resource_name} успешно удален.'
+        alert: '%{resource_name} не возможно удалить.'
+    questions:
+      create:
+        notice: 'Вопрос успешно создан.'
+        alert: 'Вопрос не возможно создать.'
+      update:
+        notice: 'Вопрос успешно изменен.'
+        alert: 'Вопрос не возможно изменить.'
+      destroy:
+        notice: 'Вопрос успешно удален.'
+        alert: 'Вопрос не возможно удалить.'
+    answers:
+      create:
+        notice: 'Ответ успешно создан.'
+        alert: 'Ответ не возможно создать.'
+      update:
+        notice: 'Ответ успешно изменен.'
+        alert: 'Ответ не возможно изменить.'
+      destroy:
+        notice: 'Ответ успешно удален.'
+        alert: 'Ответ не возможно удалить.'
+    comments:
+      create:
+        notice: 'Комментарий успешно создан.'
+        alert: 'Комментарий не возможно создать.'
+      update:
+        notice: 'Комментарий успешно изменен.'
+        alert: 'Комментарий не возможно изменить.'
+      destroy:
+        notice: 'Комментарий успешно удален.'
+        alert: 'Комментарий не возможно удалить.'

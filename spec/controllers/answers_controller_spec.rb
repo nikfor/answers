@@ -50,10 +50,6 @@ RSpec.describe AnswersController, type: :controller do
       expect(assigns(:answer)).to eq answer
     end
 
-    it "assigns the question to @question" do
-      expect(assigns(:question)).to eq answer.question
-    end
-
     it "changes answer attributes" do
       answer.reload
       expect(answer.body).to eq "new answer"

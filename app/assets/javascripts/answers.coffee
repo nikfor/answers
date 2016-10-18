@@ -31,4 +31,4 @@ $(document).on('page:load', ready)
 $(document).on('page:update', ready)
 $(document).on('turbolinks:load', ready)
 
-$(document).ready(vote_ready)
+$(document).on('turbolinks:load', vote_ready)
