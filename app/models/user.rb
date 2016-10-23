@@ -35,8 +35,7 @@ class User < ActiveRecord::Base
       end
 
       user.authorizations.create(provider: auth.provider, uid: auth.uid.to_s)
-
-      return user
+      user
     end
   end
 

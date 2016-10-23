@@ -17,6 +17,7 @@ feature "Add files to answer", %q{
     fill_in "Ваш ответ", with: "Test answer"
     attach_file "Файл", "#{Rails.root}/spec/controllers/answers_controller_spec.rb"
     click_on "Создать"
+    visit question_path(question)
     within ".answer" do
       expect(page).to have_link "answers_controller_spec.rb", href: "/uploads/attachment/file/4/answers_controller_spec.rb"
     end
