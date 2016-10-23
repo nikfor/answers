@@ -23,6 +23,10 @@ gem 'cocoon', '~> 1.2', '>= 1.2.9'
 gem 'private_pub'
 gem 'thin'
 gem 'responders', '~> 2.0'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'cancancan'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'

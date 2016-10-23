@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
 
   concern :voteable do
     member do
@@ -16,6 +16,10 @@ Rails.application.routes.draw do
       resources :comments, shallow: true, defaults: { commentable: "answer" }
     end
   end
+
+  get "users/add_email_form", to: "users#add_email_form", as: :add_email_form
+  post "users/add_email", to: "users#add_email", as: :add_user_email
+
 
   resources :attachments, only: [:destroy]
 

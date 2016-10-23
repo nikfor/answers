@@ -1,0 +1,5 @@
+.add_email_form
+  = form_tag "add_email", method: "post" do
+    label Введите Email:
+    = text_field_tag :email
+    = submit_tag "Отправить", class: "btn btn-default"
