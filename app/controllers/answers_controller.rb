@@ -8,6 +8,8 @@ class AnswersController < ApplicationController
 
   respond_to :js
 
+  authorize_resource
+
   def show
   end
 
@@ -16,28 +18,16 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.owner_of?(@answer)
-      @answer.update(answer_params)
-      respond_with @answer
-    else
-      flash.alert = "Вы не можете редактировать чужой ответ"
-    end
+    @answer.update(answer_params)
+    respond_with @answer
   end
 
   def destroy
-    if current_user.owner_of?(@answer)
-      respond_with(@answer.destroy)
-    else
-      flash.alert = "Вы не можете удалять чужие ответы"
-    end
+    respond_with(@answer.destroy)
   end
 
   def best
-    if current_user.owner_of?(@answer.question)
-      @answer.best!
-    else
-      flash.alert = "Это чужой вопрос!"
-    end
+    @answer.best!
   end
 
   private

@@ -43,7 +43,7 @@ RSpec.shared_examples "voted" do
 
       it "show error message" do
         post :yea, { id: voteable, format: :json }
-        expect(JSON.parse(response.body)['error']).to eq "Вы не можете голосовать за свой вопрос или ответ!"
+        expect(JSON.parse(response.body)['errors']).to eq "Вы не можете голосовать за свой вопрос или ответ!"
       end
     end
   end
@@ -85,7 +85,7 @@ RSpec.shared_examples "voted" do
 
       it "show error message" do
         post :nay, { id: voteable, format: :json }
-        expect(JSON.parse(response.body)['error']).to eq "Вы не можете голосовать за свой вопрос или ответ!"
+        expect(JSON.parse(response.body)['errors']).to eq "Вы не можете голосовать за свой вопрос или ответ!"
       end
     end
   end
@@ -101,7 +101,7 @@ RSpec.shared_examples "voted" do
 
     it "nullify doesn't exist vote" do
       delete :nullify_vote, { id: voteable, format: :json }
-      expect(JSON.parse(response.body)['error']).to eq "Вы не можете отменить голос не проголосовав!"
+      expect(JSON.parse(response.body)['errors']).to eq "Вы не можете отменить голос не проголосовав!"
     end
   end
 end

@@ -6,20 +6,19 @@ module Voted
   end
 
   def yea
+    authorize! :yea, @voteable, message: { text: "Вы не можете голосовать за свой вопрос или ответ!", id: @voteable.id }
     voting(1)
   end
 
   def nay
+    authorize! :nay, @voteable, message: { text: "Вы не можете голосовать за свой вопрос или ответ!", id: @voteable.id }
     voting(-1)
   end
 
   def nullify_vote
-    if current_user.voted?(@voteable)
-      @voteable.cancel_vote(current_user)
-      render json: {total: @voteable.total, id: @voteable.id}
-    else
-      render json: { error: "Вы не можете отменить голос не проголосовав!", id: @voteable.id }, status: :unprocessable_entity
-    end
+    authorize! :nullify_vote, @voteable, message: { text: "Вы не можете отменить голос не проголосовав!", id: @voteable.id }
+    @voteable.cancel_vote(current_user)
+    render json: {total: @voteable.total, id: @voteable.id}
   end
 
   private
@@ -29,14 +28,10 @@ module Voted
   end
 
   def voting(vote_value)
-    if user_signed_in? && current_user.can_vote?(@voteable)
-      if current_user.voted?(@voteable)
-        changing_vote(vote_value)
-      else
-        creating_vote(vote_value)
-      end
+    if current_user.voted?(@voteable)
+      changing_vote(vote_value)
     else
-      render json: { error: "Вы не можете голосовать за свой вопрос или ответ!", id: @voteable.id }, status: :unprocessable_entity
+      creating_vote(vote_value)
     end
   end
 

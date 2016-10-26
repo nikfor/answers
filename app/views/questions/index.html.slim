@@ -10,7 +10,7 @@
         tr
           td.number = q.id
           td.title = link_to q.title, question_path(q)
-          td.delete = link_to "Удалить", question_path(q), method: :delete if current_user && current_user.owner_of?(q)
+          td.delete = link_to "Удалить", question_path(q), method: :delete if can? :destroy, q
 
 = simple_form_for @questions.new, html:{ class: "question_new_form" }, remote: true do |f|
   h2 Создание вопроса

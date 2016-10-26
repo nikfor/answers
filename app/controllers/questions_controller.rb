@@ -9,6 +9,8 @@ class QuestionsController < ApplicationController
   respond_to :html
   respond_to :js, only: [:create, :update]
 
+  authorize_resource
+
   def index
     respond_with (@questions = Question.all)
   end
@@ -22,20 +24,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.owner_of?(@question)
-      @question.update(question_params)
-      respond_with @question
-    else
-      flash.alert = "Вы не можете редактировать чужой вопрос!"
-    end
+    @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
-    if current_user.owner_of?(@question)
-      respond_with @question.destroy
-    else
-      redirect_to questions_path, alert: "Вы не можете удалять чужие вопросы"
-    end
+    respond_with @question.destroy
   end
 
   private
