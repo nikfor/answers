@@ -27,7 +27,6 @@ class Ability
     can :destroy, [Question, Answer, Comment], user_id: user.id
 
     can :destroy, Attachment do |attachment|
-      # attachment.attachable.user == user
       user.owner_of?(attachment.attachable)
     end
 
