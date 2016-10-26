@@ -9,9 +9,9 @@
         = @question.body
         = render "attachments", obj: @question
         = render "comments/comments", commentable: @question
-      - if user_signed_in?
+      - if can? :create, Comment
         = link_to "Комментировать", "", class: "comment_question_link btn btn-default pull-right"
-      - if current_user && current_user.owner_of?(@question)
+      - if can? :update, @question
         = link_to "Редактировать", "", class: "edit_question_link btn btn-default pull-right", data: { question_id: @question.id }
         = simple_form_for @question, html:{ class: "question_edit_form" }, remote: true do |f|
           h2 Редактирование вопроса
@@ -23,7 +23,7 @@
   .answers-block
     .answers_read
       = render @question.answers
-    - if current_user
+    - if can? :create, Answer
       = simple_form_for [@question, @answer], html:{ class: "create_answer_form" }, remote: true do |f|
         = f.input :body, label: "Ваш ответ:", as: :text, class: "text_field"
         p

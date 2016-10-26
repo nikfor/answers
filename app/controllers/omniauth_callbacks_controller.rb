@@ -1,4 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_authorization_check
 
   def facebook
     simple_sign_in(request.env['omniauth.auth'])

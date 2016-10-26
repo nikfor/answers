@@ -93,6 +93,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it "render template best.js" do
+        answer.update(question: question)
         question.update(user: @user)
         post :best, id: answer, format: :js
         expect(response).to render_template :best

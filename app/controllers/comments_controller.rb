@@ -6,25 +6,19 @@ class CommentsController < ApplicationController
 
   respond_to :js
 
+  authorize_resource
+
   def create
     respond_with(@comment = @commentable.comments.create(comment_params.merge(user_id: current_user.id)))
   end
 
   def update
-    if current_user.owner_of?(@comment)
-      @comment.update(comment_params)
-      respond_with @comment
-    else
-      flash.alert = "Вы не можете редактировать чужой комментарий"
-    end
+    @comment.update(comment_params)
+    respond_with @comment
   end
 
   def destroy
-    if current_user.owner_of?(@comment)
-      respond_with @comment.destroy
-    else
-      flash.alert = "Вы не можете удалять чужие комментарии"
-    end
+    respond_with @comment.destroy
   end
 
   private

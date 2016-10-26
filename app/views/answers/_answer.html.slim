@@ -13,12 +13,13 @@
       .row
         = render "attachments", obj: answer
       .row
-        - if user_signed_in?
+        - if can? :create, Comment
           = link_to "Комментировать", "", class: "comment_answer_link btn btn-default pull-right", data: { answer_id: answer.id }
-        - if user_signed_in? && current_user.owner_of?(answer)
+        - if can? :destroy, answer
           = link_to "Удалить ответ", answer_path(answer), class: "btn btn-default", method: :delete, remote: true
+        - if can? :update, answer
           = link_to "Редактировать", "", class: "edit_answer_link btn btn-default", data: { answer_id: answer.id }
-        - if user_signed_in? && current_user.owner_of?(answer.question)
+        - if can? :best, answer
           = link_to "Лучший ответ", best_answer_path(answer), method: :post, remote: true, class: "best_answer_link btn btn-default"
       .row
         = render "comments/comments", commentable: answer

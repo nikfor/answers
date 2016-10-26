@@ -132,7 +132,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it "redirects to sign_in view " do
         delete :destroy, id: question
-        expect(response).to redirect_to questions_path
+        expect(response).to redirect_to root_path
       end
     end
   end

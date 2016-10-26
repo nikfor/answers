@@ -17,4 +17,16 @@ ru:
           attributes:
             body:
               blank: "Данные вопроса не корректны!"
-
+  unauthorized:
+    manage:
+      user: "Not allowed to manage other user accounts."
+    update:
+      question: "Вы не можете редактировать чужой вопрос!"
+      answer: "Вы не можете редактировать чужой ответ"
+      comment: "Вы не можете редактировать чужой комментарий"
+    destroy:
+      question: "Вы не можете удалять чужие вопросы"
+      answer: "Вы не можете удалять чужие ответы"
+      comment: "Вы не можете удалять чужие комментарии"
+    best:
+      answer: "Это чужой вопрос!"

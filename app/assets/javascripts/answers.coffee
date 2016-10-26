@@ -13,7 +13,7 @@ vote_ready = ->
     $('#total-votes-' + voteable.id).html(voteable.total)
   $('.vote_block').bind 'ajax:error', (e, xhr, status, error) ->
     errors = $.parseJSON(xhr.responseText);
-    $('#errors-voteable-' + errors.id).html(errors.error)
+    $('#errors-voteable-' + errors.id).html(errors.errors)
   $('.cancel_l').click (e) ->
     $(this).toggle(false);
   $('.nay').click (e) ->
