@@ -2,7 +2,7 @@ require "application_responder"
 
 class ApplicationController < ActionController::Base
 
-  skip_authorization_check
+  skip_authorization_check if: :devise_controller?
 
   self.responder = ApplicationResponder
   respond_to :html

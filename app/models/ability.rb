@@ -23,11 +23,12 @@ class Ability
   def user_abilities
     guest_abilities
     can :create, [Question, Answer, Comment]
-    can :update, [Question, Answer, Comment], user: user
-    can :destroy, [Question, Answer, Comment], user: user
+    can :update, [Question, Answer, Comment], user_id: user.id
+    can :destroy, [Question, Answer, Comment], user_id: user.id
 
     can :destroy, Attachment do |attachment|
-      attachment.attachable.user == user
+      # attachment.attachable.user == user
+      user.owner_of?(attachment.attachable)
     end
 
     can [:yea, :nay], [Question, Answer] do |voteable|
