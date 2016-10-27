@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
 
   concern :voteable do
@@ -23,11 +24,14 @@ Rails.application.routes.draw do
 
   resources :attachments, only: [:destroy]
 
-  # post 'answers/best/:id', to: 'answers#best', as: :best_answer
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  namespace :api do
+    namespace :v1 do
+      resources :profiles do
+        get :me, on: :collection
+      end
+    end
+  end
 
-  # You can have the root of your site routed with "root"
   root to: 'questions#index'
 
   # Example of regular route:
