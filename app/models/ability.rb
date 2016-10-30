@@ -40,5 +40,7 @@ class Ability
 
     can :best, Answer, question: { user_id: user.id }
 
+    can :me, User, user_id: user.id
+    can :index, User
   end
 end
