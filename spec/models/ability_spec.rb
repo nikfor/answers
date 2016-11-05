@@ -106,6 +106,16 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :best, other_answer }
       it { should_not be_able_to :best, create(:answer, question: other_question) }
     end
+
+    context "subscribe" do
+      it { should_not be_able_to :subscribe, my_question }
+      it { should be_able_to :subscribe, other_question }
+    end
+
+    context "subscribe" do
+      it { should be_able_to :unsubscribe, my_question }
+      it { should_not be_able_to :unsubscribe, other_question }
+    end
   end
 
 end

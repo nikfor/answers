@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   include Voted
 
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :find_question, only: [:show, :edit, :update, :destroy, :subscribe, :unsubscribe]
   before_action :build_answer, only: [:show]
 
   respond_to :html
@@ -30,6 +30,16 @@ class QuestionsController < ApplicationController
 
   def destroy
     respond_with @question.destroy
+  end
+
+  def subscribe
+    current_user.subscribe(@question)
+    flash[:notice] = "Вы подписаны на обновления данного вопроса!"
+  end
+
+  def unsubscribe
+    current_user.unsubscribe(@question)
+    flash[:notice] = "Вы отписаны от обновлений данного вопроса!"
   end
 
   private

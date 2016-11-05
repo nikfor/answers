@@ -12,9 +12,11 @@ RSpec.describe Answer, type: :model do
 
   it_behaves_like "Voteable"
 
+  let!(:user) { create(:user) }
   let!(:question) { create(:question) }
   let!(:answer) { create(:answer, question: question) }
   let!(:answer2) { create(:answer, question: question) }
+  let!(:answer3) { build(:answer, user: user, question: question) }
 
   it "make best answer" do
     answer.best!
@@ -26,5 +28,10 @@ RSpec.describe Answer, type: :model do
     answer.best!
     answer2.reload
     expect(answer2).to_not be_best
+  end
+
+  it ".new_answers_subscription" do
+    expect(NewAnswerJob).to receive(:perform_later)
+    answer3.save!
   end
 end
