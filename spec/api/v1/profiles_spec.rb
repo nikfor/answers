@@ -3,27 +3,14 @@ require "rails_helper"
 describe "Profiles API" do
 
   describe "GET /me" do
-    context "unauthorized" do
-      it "returns 401 status if is no access token" do
-        get "/api/v1/profiles/me", format: :json
-        expect(response.status).to eq 401
-      end
-
-      it "returns 401 status if access token is invalid" do
-        get "/api/v1/profiles/me", format: :json, access_token: "12345"
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context "authorized" do
       let(:me) { create :user }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
       before { get "/api/v1/profiles/me", format: :json, access_token: access_token.token }
-
-      it "returns status 200" do
-        expect(response).to be_success
-      end
+      it_behaves_like "API success authorizaion"
 
       %w(id email created_at updated_at admin).each do |attr|
         it "contains #{attr}" do
@@ -37,33 +24,23 @@ describe "Profiles API" do
         end
       end
     end
+
+    def do_request(options = {})
+      get "/api/v1/profiles/me", {format: :json}.merge(options)
+    end
   end
 
   describe "GET #index" do
     let!(:users) { create_list(:user, 5) }
 
-    context "unauthorized" do
-
-      it "returns 401 status if is no access token" do
-        get "/api/v1/profiles", format: :json
-        expect(response.status).to eq 401
-      end
-
-      it "returns 401 status if access token is invalid" do
-        get "/api/v1/profiles", format: :json, access_token: "12345"
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context "authorized" do
       let(:me) { create :user }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
       before { get "/api/v1/profiles", format: :json, access_token: access_token.token }
-
-      it "returns status 200" do
-        expect(response).to be_success
-      end
+      it_behaves_like "API success authorizaion"
 
       it "contains true count of users" do
         expect(response.body).to have_json_size(users.count)
@@ -89,5 +66,9 @@ describe "Profiles API" do
         end
       end
     end
+  end
+
+  def do_request(options = {})
+    get "/api/v1/profiles", {format: :json}.merge(options)
   end
 end

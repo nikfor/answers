@@ -1,7 +1,4 @@
-require "rails_helper"
-
-RSpec.shared_examples "voted" do
-
+shared_examples_for "Voted" do
   let(:user) { create(:user) }
   let(:voteable) { create(controller.controller_name.underscore.chop.to_sym, user: user) }
   let(:vote_nay) { create(:nay, voteable: voteable) }

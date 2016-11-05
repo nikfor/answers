@@ -1,5 +1,4 @@
 require 'rails_helper'
-require Rails.root.join 'spec/models/concerns/voteable_spec.rb'
 
 RSpec.describe Answer, type: :model do
   it { should belong_to :user }
@@ -11,7 +10,7 @@ RSpec.describe Answer, type: :model do
 
   it { should accept_nested_attributes_for :attachments }
 
-  it_behaves_like "voteable"
+  it_behaves_like "Voteable"
 
   let!(:question) { create(:question) }
   let!(:answer) { create(:answer, question: question) }
