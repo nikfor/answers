@@ -39,17 +39,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "#subscribe" do
-    it { expect{ user.subscribe(another_question) }.to change(user.subscriptions, :count).by(1) }
-    it { expect{ user.subscribe(another_question) }.to change(another_question.subscriptions, :count).by(1) }
-  end
-
-  describe "#unsubscribe" do
-    before { create(:subscription, user: user, question: another_question) }
-    it { expect{ user.unsubscribe(another_question) }.to change(user.subscriptions, :count).by(-1) }
-    it { expect{ user.unsubscribe(another_question) }.to change(another_question.subscriptions, :count).by(-1) }
-  end
-
   describe "#subscribed?" do
     it { expect(user).to be_subscribed(question) }
     it { expect(user).to_not be_subscribed(another_question) }

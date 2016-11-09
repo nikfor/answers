@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :authorizations
   has_many :subscriptions, dependent: :destroy
+  has_many :subscribed_questions, through: :subscriptions, source: :question
 
   validates :email, :password, presence: true
 
@@ -23,16 +24,16 @@ class User < ActiveRecord::Base
     !votes.where(voteable: voteable).empty?
   end
 
-  def subscribe(question)
-    subscriptions.create(question: question)
-  end
+  # def subscribe(question)
+  #   subscriptions.create(question: question)
+  # end
 
-  def unsubscribe(question)
-    subscriptions.where(question: question).delete_all
-  end
+  # def unsubscribe(question)
+  #   subscriptions.where(question: question).delete_all
+  # end
 
   def subscribed?(question)
-    !subscriptions.where(question: question).empty?
+    subscriptions.where(question: question).exists?
   end
 
   def self.find_for_oauth(auth)

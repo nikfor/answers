@@ -135,31 +135,4 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
-
-  describe "POST #subscribe" do
-    sign_in_user
-
-    it "create new subscribe for current_user in the database" do
-      expect{ post :subscribe, id: question, format: :js }.to change(@user.subscriptions, :count).by(1)
-    end
-
-    it "doesn't create new subscription if it exist" do
-      create(:subscription, question: question, user: @user)
-      expect{ post :subscribe, id: question, format: :js }.to_not change(Subscription, :count)
-    end
-  end
-
-  describe "DELETE #unsubscribe" do
-    sign_in_user
-
-    it "destroy subscribe for current_user in the database" do
-      create(:subscription, question: question, user: @user)
-      expect{ delete :unsubscribe, id: question, format: :js }.to change(@user.subscriptions, :count).by(-1)
-    end
-
-    it "doesn't destroy no exist subscription" do
-      question.subscriptions.delete_all
-      expect{ delete :unsubscribe, id: question, format: :js }.to_not change(Subscription, :count)
-    end
-  end
 end

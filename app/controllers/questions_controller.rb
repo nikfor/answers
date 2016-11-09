@@ -32,16 +32,6 @@ class QuestionsController < ApplicationController
     respond_with @question.destroy
   end
 
-  def subscribe
-    current_user.subscribe(@question)
-    flash[:notice] = "Вы подписаны на обновления данного вопроса!"
-  end
-
-  def unsubscribe
-    current_user.unsubscribe(@question)
-    flash[:notice] = "Вы отписаны от обновлений данного вопроса!"
-  end
-
   private
 
   def question_params

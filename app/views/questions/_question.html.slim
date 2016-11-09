@@ -7,14 +7,15 @@
     = question.body
     = render "attachments", obj: question
     = render "comments/comments", commentable: question
-  - if can? :create, Comment
-    = link_to "Комментировать", "", class: "comment_question_link btn btn-default pull-right"
-  - if can? :update, question
-    = link_to "Редактировать", "", class: "edit_question_link btn btn-default pull-right", data: { question_id: question.id }
-  - if can? :subscribe, question
-    = link_to "Подписаться", subscribe_question_path(question), class: "subscribe_question_link btn btn-default pull-right", method: :post, remote: true
-  - if can? :unsubscribe, question
-    = link_to "Отписаться", unsubscribe_question_path(question), class: "unsubscribe_question_link btn btn-default pull-right", method: :delete, remote: true
+  - if user_signed_in?
+    - if can? :create, Comment
+      = link_to "Комментировать", "", class: "comment_question_link btn btn-default pull-right"
+    - if can? :update, question
+      = link_to "Редактировать", "", class: "edit_question_link btn btn-default pull-right", data: { question_id: question.id }
+    - unless current_user.subscribed?(question)
+      = link_to "Подписаться", question_subscription_path(question), class: "subscribe_question_link btn btn-default pull-right", method: :post, remote: true
+    - if current_user.subscribed?(question)
+      = link_to "Отписаться", question_subscription_path(question), class: "unsubscribe_question_link btn btn-default pull-right", method: :delete, remote: true
     = simple_form_for question, html:{ class: "question_edit_form" }, remote: true do |f|
       h2 Редактирование вопроса
       .question_form_errors

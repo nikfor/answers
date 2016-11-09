@@ -10,16 +10,18 @@ Rails.application.routes.draw do
     end
   end
 
+      # member do
+    #   post :subscribe
+    #   delete :unsubscribe
+    # end
+
   resources :questions, concerns: [:voteable] do
-    member do
-      post :subscribe
-      delete :unsubscribe
-    end
     resources :comments, shallow: true,  defaults: { commentable: "question" }
     resources :answers, concerns: [:voteable], shallow: true do
       post :best, on: :member
       resources :comments, shallow: true, defaults: { commentable: "answer" }
     end
+    resource :subscription, only: [:create, :destroy]
   end
 
   get "users/add_email_form", to: "users#add_email_form", as: :add_email_form

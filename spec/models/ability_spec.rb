@@ -107,14 +107,19 @@ RSpec.describe Ability, type: :model do
       it { should_not be_able_to :best, create(:answer, question: other_question) }
     end
 
-    context "subscribe" do
-      it { should_not be_able_to :subscribe, my_question }
-      it { should be_able_to :subscribe, other_question }
-    end
+    describe "subscription" do
+      let(:created_subscription) { create(:subscription, user: user) }
+      let(:new_subscription) { build(:subscription, user: user ) }
 
-    context "subscribe" do
-      it { should be_able_to :unsubscribe, my_question }
-      it { should_not be_able_to :unsubscribe, other_question }
+      context "create subscription" do
+        it { should_not be_able_to :create, created_subscription  }
+        it { should be_able_to :create, new_subscription }
+      end
+
+      context "destroy subscription" do
+        it { should be_able_to :destroy, created_subscription }
+        it { should_not be_able_to :destroy, new_subscription }
+      end
     end
   end
 
