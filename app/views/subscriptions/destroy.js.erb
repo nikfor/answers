@@ -1,0 +1,8 @@
+<% if @question.errors.present? %>
+  <% @question.errors.full_messages.each do |message| %>
+    $(".question_form_errors").html("<%= message %>")
+  <% end %>
+<% else %>
+  $(".question-block").html("<%= j render @question %>");
+  $(".alert").html("<%= flash[:notice] %>");
+<% end %>

@@ -106,6 +106,21 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :best, other_answer }
       it { should_not be_able_to :best, create(:answer, question: other_question) }
     end
+
+    describe "subscription" do
+      let(:created_subscription) { create(:subscription, user: user) }
+      let(:new_subscription) { build(:subscription, user: user ) }
+
+      context "create subscription" do
+        it { should_not be_able_to :create, created_subscription  }
+        it { should be_able_to :create, new_subscription }
+      end
+
+      context "destroy subscription" do
+        it { should be_able_to :destroy, created_subscription }
+        it { should_not be_able_to :destroy, new_subscription }
+      end
+    end
   end
 
 end

@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :votes
   has_many :comments
   has_many :authorizations
+  has_many :subscriptions, dependent: :destroy
+  has_many :subscribed_questions, through: :subscriptions, source: :question
 
   validates :email, :password, presence: true
 
@@ -22,8 +24,19 @@ class User < ActiveRecord::Base
     !votes.where(voteable: voteable).empty?
   end
 
-  def self.find_for_oauth(auth)
+  # def subscribe(question)
+  #   subscriptions.create(question: question)
+  # end
 
+  # def unsubscribe(question)
+  #   subscriptions.where(question: question).delete_all
+  # end
+
+  def subscribed?(question)
+    subscriptions.where(question: question).exists?
+  end
+
+  def self.find_for_oauth(auth)
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
 
@@ -33,10 +46,8 @@ class User < ActiveRecord::Base
         password = Devise.friendly_token[0, 20]
         user = User.create!(email: email, password: password, password_confirmation: password)
       end
-
       user.authorizations.create(provider: auth.provider, uid: auth.uid.to_s)
       user
     end
   end
-
 end

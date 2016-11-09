@@ -4,13 +4,15 @@ RSpec.describe User, type: :model do
   it { should have_many(:questions) }
   it { should have_many(:answers) }
   it { should have_many(:authorizations) }
+  it { should have_many(:subscriptions) }
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
 
-  let(:user) { create(:user) }
+  let!(:users) { create_list(:user, 2) }
+  let(:user) { users.first }
   let(:question) { create(:question, user: user) }
-  let!(:vote_yea) { create(:yea, voteable: question) }
+  let(:another_question) { create(:question) }
 
   describe "#owner_of?" do
     let(:another_user) { create(:user) }
@@ -25,6 +27,8 @@ RSpec.describe User, type: :model do
   end
 
   describe "#voted?" do
+    let!(:vote_yea) { create(:yea, voteable: question) }
+
     it "user voted" do
       vote_yea.update(user: user)
       expect(user).to be_voted(question)
@@ -33,6 +37,11 @@ RSpec.describe User, type: :model do
     it "user doesn't vote" do
       expect(user).to_not be_voted(question)
     end
+  end
+
+  describe "#subscribed?" do
+    it { expect(user).to be_subscribed(question) }
+    it { expect(user).to_not be_subscribed(another_question) }
   end
 
   describe ".find_for_oauth" do
@@ -97,7 +106,6 @@ RSpec.describe User, type: :model do
           expect(authorization.provider).to eq auth.provider
           expect(authorization.uid).to eq auth.uid
         end
-
       end
     end
   end

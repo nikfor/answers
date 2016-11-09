@@ -42,5 +42,13 @@ class Ability
 
     can :me, User, id: user.id
     can :index, User
+
+    can :create, Subscription do |subscription|
+      !user.subscribed?(subscription.question)
+    end
+
+    can :destroy, Subscription do |subscription|
+      user.subscribed?(subscription.question)
+    end
   end
 end

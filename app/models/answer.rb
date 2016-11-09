@@ -10,6 +10,8 @@ class Answer < ActiveRecord::Base
 
   default_scope { order(best: :desc, created_at: :desc) }
 
+  after_create :new_answers_subscription
+
   def best!
     ActiveRecord::Base.transaction do
       if best_answer = question.answers.find_by(best: true)
@@ -19,4 +21,9 @@ class Answer < ActiveRecord::Base
     end
   end
 
+  private
+
+  def new_answers_subscription
+    NewAnswerJob.perform_later(self)
+  end
 end
