@@ -12,4 +12,8 @@
 
 /public/uploads
 /config/database.yml
+/config/*.sphinx.conf
+/db/sphinx
+/config/thinking_sphinx.yml
+
 /.idea
