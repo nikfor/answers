@@ -1,0 +1,9 @@
+= simple_form_for :search, url: search_path, as: :search, method: :get, html:{ class: "search_form" } do |f|
+  h1 Поиск
+  br/
+  = f.input :query, label: "Введите слово или фразу:"
+  = f.input :area, :as => :radio_buttons, collection: [ ["Искать в ответах" ,"Answer"], ["Искать в вопросах" ,"Question"], ["Искать в комментариях" ,"Comment"], ["Искать везде" ,"ThinkingSphinx"] ], checked: ["All", true]
+  = link_to "Отмена", "", class: "cancel_search_link btn btn-default pull-right"
+  = f.button :submit, "Искать", class: "btn btn-default pull-right"
+
+

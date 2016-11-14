@@ -10,11 +10,6 @@ Rails.application.routes.draw do
     end
   end
 
-      # member do
-    #   post :subscribe
-    #   delete :unsubscribe
-    # end
-
   resources :questions, concerns: [:voteable] do
     resources :comments, shallow: true,  defaults: { commentable: "question" }
     resources :answers, concerns: [:voteable], shallow: true do
@@ -26,7 +21,7 @@ Rails.application.routes.draw do
 
   get "users/add_email_form", to: "users#add_email_form", as: :add_email_form
   post "users/add_email", to: "users#add_email", as: :add_user_email
-
+  get "search/", to: "search#index", as: :search
 
   resources :attachments, only: [:destroy]
 

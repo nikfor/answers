@@ -13,6 +13,7 @@
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
       <ul class="nav navbar-nav">
+        <li><%= link_to "Поиск", "", class: "search_form_link" %></li>
         <li><%= link_to "Вопросы", questions_path %></li>
         <% if current_user %>
           <li><%= link_to "Задать вопрос", '', class: "new_question_link" %></li>
@@ -27,6 +28,7 @@
     <section>
       <%= yield %>
     </section>
+    <%= render 'search/form' %>
   </section>
 </body>
 </html>

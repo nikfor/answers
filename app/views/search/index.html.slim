@@ -1,0 +1,17 @@
+h1 Результаты поиска:
+.search_summary
+  - if @result.present?
+    - @result.each do |item|
+      - if item.class == Question
+        p = link_to item.title, item
+        p #{item.body}
+      - elsif item.class == User
+        p #{item.email}
+      - elsif item.class == Answer
+        p = link_to item.body, item.question
+      - elsif item.class == Comment
+        p #{item.body}
+      div #{item.created_at}
+  - else
+    p
+      div Ни одного совпадения!

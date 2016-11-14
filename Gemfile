@@ -33,7 +33,9 @@ gem 'oj'
 gem 'oj_mimic_json'
 gem 'whenever'
 gem 'sidekiq'
-# gem 'sinatra', require: nil
+gem 'mysql2'
+gem 'jdbc-mysql',      '= 5.1.35',  :platform => :jruby
+gem 'thinking-sphinx', '~> 3.2.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
