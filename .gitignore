@@ -15,5 +15,6 @@
 /config/*.sphinx.conf
 /db/sphinx
 /config/thinking_sphinx.yml
+config/private_pub.yml
 
 /.idea
