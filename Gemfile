@@ -38,6 +38,7 @@ gem 'jdbc-mysql',      '= 5.1.35',  :platform => :jruby
 gem 'thinking-sphinx', '~> 3.2.0'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'therubyracer'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
