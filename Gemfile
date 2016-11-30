@@ -39,6 +39,7 @@ gem 'thinking-sphinx', '~> 3.2.0'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer'
+gem 'unicorn'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
@@ -64,4 +65,5 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano-ssh-doctor', '~> 1.0'
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
