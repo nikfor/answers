@@ -1,31 +1,32 @@
 - if answer.persisted?
-  div class = "answer_#{answer.id} answer panel panel-default clearfix"
-    .col-md-1
-      .row
-        - if answer.best?
-          .best_mark
-            span.label.label-success best
-      .row.text-center
-        = render "votes/votes", voteable: answer
-    .col-md-11
-      .row
-        .panel-body = answer.body
-      .row
-        = render "attachments", obj: answer
-      .row
-        - if can? :create, Comment
-          = link_to "Комментировать", "", class: "comment_answer_link btn btn-default pull-right", data: { answer_id: answer.id }
-        - if can? :destroy, answer
-          = link_to "Удалить ответ", answer_path(answer), class: "btn btn-default", method: :delete, remote: true
-        - if can? :update, answer
-          = link_to "Редактировать", "", class: "edit_answer_link btn btn-default", data: { answer_id: answer.id }
-        - if can? :best, answer
-          = link_to "Лучший ответ", best_answer_path(answer), method: :post, remote: true, class: "best_answer_link btn btn-default"
-      .row
-        = render "comments/comments", commentable: answer
-      .row
-        p
-          = simple_form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
-            = f.input :body, label: "Новый ответ", as: :text, class: "text_field"
-            = f.button :submit, "Сохранить", class: "left_btn"
+  - cache answer do
+    div class = "answer_#{answer.id} answer panel panel-default clearfix"
+      .col-md-1
+        .row
+          - if answer.best?
+            .best_mark
+              span.label.label-success best
+        .row.text-center
+          = render "votes/votes", voteable: answer
+      .col-md-11
+        .row
+          .panel-body = answer.body
+        .row
+          = render "attachments", obj: answer
+        .row
+          - if can? :create, Comment
+            = link_to "Комментировать", "", class: "comment_answer_link btn btn-default pull-right", data: { answer_id: answer.id }
+          - if can? :destroy, answer
+            = link_to "Удалить ответ", answer_path(answer), class: "btn btn-default", method: :delete, remote: true
+          - if can? :update, answer
+            = link_to "Редактировать", "", class: "edit_answer_link btn btn-default", data: { answer_id: answer.id }
+          - if can? :best, answer
+            = link_to "Лучший ответ", best_answer_path(answer), method: :post, remote: true, class: "best_answer_link btn btn-default"
+        .row
+          = render "comments/comments", commentable: answer
+        .row
+          p
+            = simple_form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
+              = f.input :body, label: "Новый ответ", as: :text, class: "text_field"
+              = f.button :submit, "Сохранить", class: "left_btn"
 

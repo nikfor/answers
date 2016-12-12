@@ -2,6 +2,7 @@ ul.comments-list.list-group
   = render commentable.comments
 p
   - if can? :create, Comment
-    = simple_form_for [commentable, commentable.comments.new], remote: true, html: { id: "#{commentable.id}", class: "new_comment"} do |f|
-      = f.input :body, label: "Новый комментарий", as: :text, class: "text_field"
-      = f.button :submit, "Создать", class: "left_btn"
+    - cache ["new_comment_form", commentable] do
+      = simple_form_for [commentable, commentable.comments.new], remote: true, html: { id: "#{commentable.id}", class: "new_comment"} do |f|
+        = f.input :body, label: "Новый комментарий", as: :text, class: "text_field"
+        = f.button :submit, "Создать", class: "left_btn"
