@@ -40,6 +40,7 @@ gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer'
 gem 'unicorn'
+gem 'redis-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'

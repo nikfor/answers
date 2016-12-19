@@ -10,8 +10,23 @@
 .comment {
   font-size: 12px;
   padding: 10px;
-  margin-bottom: 2px;
+  margin-bottom: 9px;
   border-radius: 5px;
+  padding-right: 15px;
+  width: 700px;
+  float: right;
+}
+
+.comment:last-child {
+  margin-bottom: 15px;
+}
+
+.comment_author{
+  padding-bottom: 3px;
+  border-bottom: 1px grey solid;
+  margin-top: 8px;
+  margin-right: 5px;
+  float: right;
 }
 
 .comment .btn{

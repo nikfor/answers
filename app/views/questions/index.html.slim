@@ -1,16 +1,21 @@
-.question-list
-  h1 Вопросы
-  table.table.table-stripped.questions_table
-    tr
-      th Номер
-      th Название
-      th Удалить
-    - unless @questions.empty?
-      - @questions.each do |q|
-        tr
-          td.number = q.id
-          td.title = link_to q.title, question_path(q)
-          td.delete = link_to "Удалить", question_path(q), method: :delete if can? :destroy, q
+- cache collection_cache_key_for :question do
+  .question-list
+    h1 Вопросы
+    table.table.table-stripped.questions_table
+      tr
+        th Номер
+        th Название
+        th Ответов
+        th Автор
+        th Удалить
+      - unless @questions.empty?
+        - @questions.each do |q|
+          tr
+            td.number = q.id
+            td.title = link_to q.title, question_path(q)
+            td.answers = q.answers.count
+            td.author = q.user.email if q.user.present?
+            td.delete = link_to "Удалить", question_path(q), method: :delete if can? :destroy, q
 
 = simple_form_for @questions.new, html:{ class: "question_new_form" }, remote: true do |f|
   h2 Создание вопроса
@@ -25,6 +30,6 @@
   = link_to "Отмена", '', class: "cancel_form_link btn btn-default right_btn pull-right"
   = f.button :submit, "Создать", class: "right_btn pull-right"
 
-s
+
 = subscribe_to "/questions"
 

@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Answers</title>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Marmelad" rel="stylesheet">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -9,21 +11,21 @@
 <body>
   <section id="container">
     <header class="clearfix">
-      <h1>Ответы на все вопросы!</h1>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <ul class="nav navbar-nav">
+      <%= image_tag 'header-background.png', class: "header-image" %>
+      <ul class="nav navbar-nav clearfix">
         <li><%= link_to "Поиск", "", class: "search_form_link" %></li>
         <li><%= link_to "Вопросы", questions_path %></li>
         <% if current_user %>
           <li><%= link_to "Задать вопрос", '', class: "new_question_link" %></li>
-          <li class="reg-btns"><%= link_to current_user.email, edit_user_password_path %></a></li>
-          <li class="reg-btns"><%=link_to "Выйти", destroy_user_session_path, method: :delete %></li>
+          <li class="reg-btns right-nav-button"><%=link_to "Выйти", destroy_user_session_path, method: :delete %></li>
+          <li class="reg-btns right-nav-button"><%= link_to current_user.email, edit_user_password_path %></a></li>
         <% else %>
-          <li class="reg-btns"><%= link_to "Регистрация", new_user_registration_path %></li>
-          <li class="reg-btns"><%= link_to "Войти", new_user_session_path %></li>
+          <li class="reg-btns right-nav-button"><%= link_to "Регистрация", new_user_registration_path %></li>
+          <li class="reg-btns right-nav-button"><%= link_to "Войти", new_user_session_path %></li>
         <% end %>
       </ul>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
     </header>
     <section>
       <%= yield %>
