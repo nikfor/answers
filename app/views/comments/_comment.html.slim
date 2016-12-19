@@ -9,3 +9,4 @@
         - if can? :update, comment
           = link_to "Редактировать комментарий", "", class: "edit_comment_link btn btn-primary btn-xs pull-right", data: { comment_id: comment.id }
       = render "comments/form_edit_comment", comment: comment
+      .row.comment_author = "Автор: #{comment.user.email} Дата: #{comment.updated_at.strftime('%d.%m.%Y')}"

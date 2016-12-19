@@ -3,7 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .question-answer-block{
-  width: 800px;
+  margin-top: 10px;
+  width: 100%;
 }
 
 .answer .btn{
@@ -24,6 +25,11 @@
 
 .subscribe_question_link{
   margin: 10px;
+}
+
+.table td.author, .table td.number, .table td.delete, .table td.answers{
+  vertical-align: middle;
+  text-align: center;
 }
 
 .question_edit_form{
